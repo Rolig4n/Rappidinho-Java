@@ -48,7 +48,7 @@ public class CadastrarCidade extends HttpServlet {
             
             if(request.getParameter("idcidade").equals("")){
                 if(dao.cadastrar(oCidade)){
-                    mensagem = "Cidade"+ oCidade.getNomeCidade() +"Cadastrada com Sucesso !";
+                    mensagem = "Cidade "+ oCidade.getNomeCidade() +"Cadastrada com Sucesso !";
                 }else
                     mensagem = "Problemas ao Cadastrar Cidade"+ " Verifique os dados Novamente";
             }else{
@@ -61,7 +61,7 @@ public class CadastrarCidade extends HttpServlet {
             }
             
             request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("DadosCidade").forward(request, response);
+            request.getRequestDispatcher("ListarCidade").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas na Servlet ao Cadastrar Cidade "+ex.getMessage());ex.printStackTrace();
         }

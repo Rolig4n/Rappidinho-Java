@@ -42,7 +42,6 @@ public class CadastrarEstado extends HttpServlet {
         String mensagem = null;
 
         Estado oEstado = new Estado();
-        oEstado.setIdEstado(0);
         oEstado.setNomeEstado(nomeEstado);
         oEstado.setSiglaEstado(siglaEstado);
 
