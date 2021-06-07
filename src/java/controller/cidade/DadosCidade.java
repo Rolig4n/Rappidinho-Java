@@ -39,7 +39,7 @@ public class DadosCidade extends HttpServlet {
             
             GenericDAO dao = new EstadoDAO();
             request.setAttribute("estados", dao.listar());
-            request.getRequestDispatcher("ListarCidade").forward(request, response);
+            request.getRequestDispatcher("cadastros/cidade/cadastrarCidade.jsp").forward(request, response);
             
         } catch (Exception ex){
             System.out.println("Problemas ao listar Cidade! Erro: " + ex.getMessage());
