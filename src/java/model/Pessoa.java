@@ -11,7 +11,7 @@ package model;
  */
 public class Pessoa {
         
-    private int idPessoa;
+    private Integer idPessoa;
     private String nomePessoa;
     private String emailPessoa;
     private String senhaPessoa;
@@ -20,7 +20,7 @@ public class Pessoa {
     private String enderecoPessoa;
     private String tipoPessoa;
     private Cidade cidade;
-    
+    private Estado estado;
     
     public Pessoa() {
     }
@@ -28,14 +28,14 @@ public class Pessoa {
     /**
      * @return the idPessoa
      */
-    public int getIdPessoa() {
+    public Integer getIdPessoa() {
         return idPessoa;
     }
 
     /**
      * @param idPessoa the idPessoa to set
      */
-    public void setIdPessoa(int idPessoa) {
+    public void setIdPessoa(Integer idPessoa) {
         this.idPessoa = idPessoa;
     }
 
@@ -149,6 +149,20 @@ public class Pessoa {
      */
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    /**
+     * @return the estado
+     */
+    public Estado getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     

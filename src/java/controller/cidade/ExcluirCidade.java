@@ -14,15 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cidade;
-import model.Estado;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CadastrarCidade", urlPatterns = {"/CadastrarCidade"})
-public class CadastrarCidade extends HttpServlet {
+@WebServlet(name = "ExcluirCidade", urlPatterns = {"/ExcluirCidade"})
+public class ExcluirCidade extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,35 +34,21 @@ public class CadastrarCidade extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+       
+         int idCidade = Integer.parseInt(request.getParameter("idcidade"));
         
-        String mensagem = null;
-        
-        Cidade oCidade = new Cidade();
-        oCidade.setNomeCidade(request.getParameter("nomecidade"));
-        oCidade.setEstado(new Estado(Integer.parseInt(request.getParameter("idestado"))));
-        
-        try {
+        try{
+            
             GenericDAO dao = new CidadeDAO();
+            dao.excluir(idCidade);
+            request.getRequestDispatcher("ListarCidade").forward(request, response);                    
             
-            if(request.getParameter("idcidade").equals("")){
-                if(dao.cadastrar(oCidade)){
-                    mensagem = "Cidade "+ oCidade.getNomeCidade() +" Cadastrada com Sucesso !";
-                }else
-                    mensagem = "Problemas ao Cadastrar Cidade"+ " Verifique os dados Novamente";
-            }else{
-                oCidade.setIdCidade(Integer.parseInt(request.getParameter("idcidade"))); 
-                if(dao.alterar(oCidade)){
-                    mensagem = "Cidade "+ oCidade.getNomeCidade() + " Alterado com Sucesso !";
-                }else{
-                    mensagem = "Problemas ao Alterar Cidade";
-                }
-            }
-            
-            request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("ListarCidade").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Cadastrar Cidade "+ex.getMessage());ex.printStackTrace();
+        } catch(Exception ex){
+            System.out.println("Problemas ao excluir Cidade! Erro: " + ex.getMessage());
+            ex.printStackTrace();
         }
+    
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

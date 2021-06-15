@@ -11,11 +11,11 @@ import java.io.InputStream;
  *
  * @author fbrcmmelo
  */
-public class Contratado {
+public class Contratado extends Pessoa{
     private int idContratado;
     private InputStream fotoContratado;
     private String cnhContratado;
-    
+    private int fileInt;
 
     public Contratado() {
     }
@@ -60,6 +60,20 @@ public class Contratado {
      */
     public void setCnhContratado(String cnhContratado) {
         this.cnhContratado = cnhContratado;
+    }
+
+    /**
+     * @return the fileInt
+     */
+    public int getFileInt() {
+        return fileInt;
+    }
+
+    /**
+     * @param fileInt the fileInt to set
+     */
+    public void setFileInt(int fileInt) {
+        this.fileInt = fileInt;
     }
     
     
