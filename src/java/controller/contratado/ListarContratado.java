@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.cidade;
+package controller.contratado;
 
-import DAO.CidadeDAO;
+import DAO.ContratadoDAO;
 import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cidade;
-import model.Estado;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CadastrarCidade", urlPatterns = {"/CadastrarCidade"})
-public class CadastrarCidade extends HttpServlet {
+@WebServlet(name = "ListarContratado", urlPatterns = {"/ListarContratado"})
+public class ListarContratado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,34 +34,13 @@ public class CadastrarCidade extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String mensagem = null;
-        
-        Cidade oCidade = new Cidade();
-        oCidade.setNomeCidade(request.getParameter("nomecidade"));
-        oCidade.setEstado(new Estado(Integer.parseInt(request.getParameter("idestado"))));
-        
         try {
-            GenericDAO dao = new CidadeDAO();
-            
-            if(request.getParameter("idcidade").equals("")){
-                if(dao.cadastrar(oCidade)){
-                    mensagem = "Cidade "+ oCidade.getNomeCidade() +" Cadastrada com Sucesso !";
-                }else
-                    mensagem = "Problemas ao Cadastrar Cidade"+ " Verifique os dados Novamente";
-            }else{
-                oCidade.setIdCidade(Integer.parseInt(request.getParameter("idcidade"))); 
-                if(dao.alterar(oCidade)){
-                    mensagem = "Cidade "+ oCidade.getNomeCidade() + " Alterado com Sucesso !";
-                }else{
-                    mensagem = "Problemas ao Alterar Cidade";
-                }
-            }
-            
-            request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("ListarCidade").forward(request, response);
+            GenericDAO dao = new ContratadoDAO();
+            request.setAttribute("contratados", dao.listar());
+            request.getRequestDispatcher("cadastros/contratado/listarContratado.jsp").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Cadastrar Cidade "+ex.getMessage());ex.printStackTrace();
+            System.out.println("Problemas na Servlet ao Listar Contratados "+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

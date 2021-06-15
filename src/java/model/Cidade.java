@@ -17,6 +17,25 @@ public class Cidade {
     public Cidade() {
     }
 
+    public Cidade(int idCidade, String nomeCidade) {
+     this.idCidade = idCidade;
+     this.nomeCidade = nomeCidade;
+    }
+
+    public Cidade(int idcidade) {
+        this.idCidade = idcidade;
+    }
+
+    public Cidade(String string) {
+        this.nomeCidade=string;
+    }
+
+    public Cidade(int idCidade, String nomeCidade, Estado estado) {
+        this.idCidade = idCidade;
+        this.nomeCidade = nomeCidade;
+        this.estado = estado;
+    }
+
     /**
      * @return the idCidade
      */
