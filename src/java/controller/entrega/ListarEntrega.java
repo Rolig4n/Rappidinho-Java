@@ -5,6 +5,8 @@
  */
 package controller.entrega;
 
+import DAO.EntregaDAO;
+import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,17 +34,16 @@ public class ListarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ListarEntrega</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ListarEntrega at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        
+        try {
+            GenericDAO dao = new EntregaDAO();
+            
+            request.setAttribute("entregas", dao.listar());
+            request.getRequestDispatcher("cadastros/entrega/listarEntrega.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Problemas na Servlet ao Listar Entregas Erro "+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

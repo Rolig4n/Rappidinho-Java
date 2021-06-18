@@ -71,14 +71,13 @@ public class AdministradorDAO implements GenericDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*, a.rg_administrador,c.nome_cidade,e.sigla_estado\"\n"
-                + "+ \"from pessoa p \n"
-                + "inner join administrador a \n"
-                + "on p.id_pessoa = a.id_pessoa \n"
-                + "inner join cidade c \n"
-                + "on p.id_cidade = c.id_cidade \n"
-                + "inner join estado e \n"
-                + "on c.id_estado = e.id_estado;";
+        String sql = "select p.*, a.rg_administrador , c.nome_cidade, e.sigla_estado from pessoa p\n" +
+"                inner join administrador a \n" +
+"                on p.id_pessoa = a.id_pessoa\n" +
+"                inner join cidade c \n" +
+"                on p.id_cidade = c.id_cidade \n" +
+"                inner join estado e\n" +
+"                on c.id_estado = e.id_estado";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -94,6 +93,7 @@ public class AdministradorDAO implements GenericDAO {
                 oAdmin.setEnderecoPessoa(rs.getString("endereco_pessoa"));
                 oAdmin.setTelefonePessoa(rs.getString("telefone_pessoa"));
                 oAdmin.setCidade(new Cidade(rs.getString("nome_cidade")));
+                oAdmin.setEstado(new Estado(rs.getString("sigla_estado")));
 
                 resultado.add(oAdmin);
             }
@@ -114,48 +114,48 @@ public class AdministradorDAO implements GenericDAO {
 
     @Override
     public void excluir(int idObject) {
+
         PreparedStatement stmt = null;
-        String sql = "delete from administrador where id_pessoa=?; "
-                + "commit; "
-                + "delete from pessoa where id_pessoa=?;";
+
+        String sqlA = "DELETE FROM administrador WHERE id_pessoa = ?;";
+        String sqlP = "DELETE FROM pessoa WHERE id_pessoa = ?;";
 
         try {
-            stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sqlA);
             stmt.setInt(1, idObject);
-            stmt.setInt(2, idObject);
             stmt.executeUpdate();
-        } catch (Exception ex) {
-            System.out.println("Problemas ao Excluir Administrador Erro " + ex.getMessage());
+            
+            stmt = conn.prepareStatement(sqlP);
+            stmt.setInt(1, idObject);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao excluir administrador! Erro: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             try {
                 ConnectionFactory.closeConnection(conn, stmt);
-            } catch (Exception e) {
-                System.out.println("Problemas ao fechar os parametros de conexao " + e.getMessage());
-                e.printStackTrace();
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
             }
         }
+
     }
 
     @Override
     public Object carregar(int idObject) {
-        
+
         Administrador oAdmin = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*, a.rg_administrador,c.nome_cidade,e.sigla_estado\n" +
-"                from pessoa p \n" +
-"                inner join administrador a \n" +
-"                on p.id_pessoa = a.id_pessoa \n" +
-"                inner join cidade c \n" +
-"                on p.id_cidade = c.id_cidade \n" +
-"                inner join estado e \n" +
-"                on c.id_estado = e.id_estado\n" +
-"                and p.id_pessoa=?;";
+        String sql = "SELECT p.*, a.id_administrador, a.rg_administrador FROM pessoa p, administrador a "
+                + "WHERE p.id_pessoa = a.id_pessoa AND p.id_pessoa = ?;";
 
         try {
             stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idObject);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -181,31 +181,44 @@ public class AdministradorDAO implements GenericDAO {
                 ex.printStackTrace();
             }
         }
-    return oAdmin;
+        return oAdmin;
     }
 
     @Override
     public Boolean alterar(Object object) {
-        Administrador  oAdmin = (Administrador) object;
+        Administrador oAdmin = (Administrador) object;
         PreparedStatement stmt = null;
         String sql = "update administrador set rg_administrador = ? where id_pessoa= ?";
-        
+
         try {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, oAdmin.getRgAdministrador());
             stmt.setInt(2, oAdmin.getIdPessoa());
-            return true;
-        } catch (Exception ex) {
-            System.out.println("Problemas ao Alterar Administrador Erro "+ex.getMessage());
+
+            if (new PessoaDAO().alterar(oAdmin)) {
+                stmt.executeUpdate();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao alterar Administrador ! Erro: " + ex.getMessage());
             ex.printStackTrace();
             return false;
-        }finally{
+        } catch (Exception ex) {
+            System.out.println("Problemas ao alterar Pessoa! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        } finally {
             try {
                 ConnectionFactory.closeConnection(conn, stmt);
             } catch (Exception ex) {
-                System.out.println("Problemas ao fechar os parametros de conexao "+ex.getMessage());ex.printStackTrace();
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
             }
         }
+
     }
 
 }

@@ -23,7 +23,8 @@ import utils.ConnectionFactory;
  * @author fbrcmmelo
  */
 public class ContratanteDAO implements GenericDAO {
-        private Connection conn;
+
+    private Connection conn;
 
     public ContratanteDAO() throws Exception {
         try {
@@ -70,14 +71,13 @@ public class ContratanteDAO implements GenericDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*,con.*,c.nome_cidade,e.sigla_estado\"\n"
-                + "+ \"from pessoa p \n"
-                + "inner join contratante con \n"
-                + "on p.id_pessoa = con.id_pessoa \n"
-                + "inner join cidade c \n"
-                + "on p.id_cidade = c.id_cidade \n"
-                + "inner join estado e \n"
-                + "on c.id_estado = e.id_estado;";
+        String sql = "select p.*, con.foto_contratante, c.nome_cidade, e.sigla_estado from pessoa p\n" +
+"                inner join contratante con \n" +
+"                on p.id_pessoa = con.id_pessoa\n" +
+"                inner join cidade c \n" +
+"                on p.id_cidade = c.id_cidade \n" +
+"                inner join estado e\n" +
+"                on c.id_estado = e.id_estado";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -91,8 +91,8 @@ public class ContratanteDAO implements GenericDAO {
                 oContratante.setCpfPessoa(rs.getString("cpf_pessoa"));
                 oContratante.setEnderecoPessoa(rs.getString("endereco_pessoa"));
                 oContratante.setTelefonePessoa(rs.getString("telefone_pessoa"));
-                oContratante.setCidade(new Cidade(rs.getInt("id_cidade"), rs.getString("nome_cidade"), 
-                        new Estado(rs.getInt("id_estado"), rs.getString("sigla_estado"))));
+                oContratante.setCidade(new Cidade(rs.getString("nome_cidade")));
+                oContratante.setEstado(new Estado(rs.getString("sigla_estado")));
 
                 resultado.add(oContratante);
             }
@@ -110,54 +110,143 @@ public class ContratanteDAO implements GenericDAO {
         }
         return resultado;
     }
-    
-    public Contratante mostrarFoto(int idPessoa){
-        
+
+    public Contratante mostrarFoto(int idPessoa) {
+
         Contratante oContratante = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "select c.id_pessoa, c.foto_contratante from contratante c "
                 + "where c.id_pessoa = ?;";
-        
-        try{
-            
+
+        try {
+
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idPessoa);
             rs = stmt.executeQuery();
-            
-            if (rs.next()){
+
+            if (rs.next()) {
                 oContratante = new Contratante();
                 oContratante.setIdPessoa(rs.getInt("id_pessoa"));
                 oContratante.setFotoContratante(rs.getBinaryStream("foto_contratante"));
             }
-            
-        } catch (SQLException ex){
+
+        } catch (SQLException ex) {
             System.out.println("Problemas ao listar Foto Contratante! Erro: " + ex.getMessage());
-            ex.printStackTrace();            
+            ex.printStackTrace();
         } finally {
-            try{
+            try {
                 ConnectionFactory.closeConnection(conn, stmt, rs);
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
                 ex.printStackTrace();
             }
         }
-        return oContratante;        
+        return oContratante;
     }
 
     @Override
     public void excluir(int idObject) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        PreparedStatement stmt = null;
+
+        String sqlA = "DELETE FROM contratante WHERE id_pessoa = ?;";
+        String sqlP = "DELETE FROM pessoa WHERE id_pessoa = ?;";
+
+        try {
+            stmt = conn.prepareStatement(sqlA);
+            stmt.setInt(1, idObject);
+            stmt.executeUpdate();
+
+            stmt = conn.prepareStatement(sqlP);
+            stmt.setInt(1, idObject);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao excluir contratante! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override
     public Object carregar(int idObject) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Contratante oContratante = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select p.*, c.id_contratante, c.foto_contratante from pessoa p, contratante c "
+                + "where p.id_pessoa = c.id_pessoa and p.id_pessoa = ?";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idObject);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                oContratante = new Contratante();
+                oContratante.setFotoContratante(rs.getBinaryStream("foto_contratante"));
+                oContratante.setIdPessoa(rs.getInt("id_pessoa"));
+                oContratante.setNomePessoa(rs.getString("nome_pessoa"));
+                oContratante.setEmailPessoa(rs.getString("email_pessoa"));
+                oContratante.setCpfPessoa(rs.getString("cpf_pessoa"));
+                oContratante.setEnderecoPessoa(rs.getString("endereco_pessoa"));
+                oContratante.setTelefonePessoa(rs.getString("telefone_pessoa"));
+                oContratante.setCidade(new Cidade(rs.getString("nome_cidade")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao Carregar Contratante ! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        return oContratante;
     }
 
     @Override
     public Boolean alterar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Contratante oContratante = (Contratante) object;
+        PreparedStatement stmt = null;
+        String sql = "update contratante set foto_contratante = ? where id_pessoa= ?";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setBinaryStream(1, oContratante.getFotoContratante(), oContratante.getFileInt());
+            stmt.setInt(2, oContratante.getIdPessoa());
+
+            if (new PessoaDAO().alterar(oContratante)) {
+                stmt.executeUpdate();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao alterar Contratante ! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Problemas ao alterar Pessoa! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
     }
 
 }
