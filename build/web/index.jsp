@@ -2,41 +2,30 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <c:import url="head.jsp"></c:import>
-            <title>Index</title>
-        </head>
-
-        <body>
-            <!--Loader-->
-            <div class="preloader">
-                <div class="lds-ripple">
-                    <div class="lds-pos"></div>
-                    <div class="lds-pos"></div>
-                </div>
-            </div>
-
-            <!--Corpo da pagina-->
-            <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
-                 data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-
-                <!--CabeÃ§alho-->
-            <c:import url="cabecalho.jsp"></c:import>
-
-                <!--Menu-->
-            <c:import url="menu.jsp"></c:import>
-
-                <!--Conteudo-->
-                <div class="page-wrapper">
-                    <!--taca os bag aqui dentro-->
-                    
-                    <!--Rodape-->
-                    <c:import url="footer.jsp"></c:import>
-                </div>
-            </div>
-
-            <!--Import dos scripts-->
-        <c:import url="scripts.jsp"></c:import>
-
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Rappdinho</title>
+    </head>
+    <body>
+        <div id="login" align="center">
+        <h1>Acesso ao Sistema</h1>
+        
+        <form name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">
+            
+            <p><label for="emailpessoa">Email: </label><input type="email" name="emailpessoa" id="emailpessoa" required /></p>
+            <p><label for="senhapessoa">Senha: </label><input type="password" name="senhapessoa" id="senhapessoa" required /></p>
+            <input type="hidden" name="acao" value="logar">
+            <p><input type="submit" name="logar" id="logar" value="Acessar" /></p>            
+        </form>
+        </div>
+        <div id="error" align="center">
+        ${erro}    
+        </div>
+        <div id ="cadastrar" align="center">
+            <p>Não tem conta ? <a href="Cadastrar" role="button">Cadastrar-se</a></p>
+        </div>
+        
+            
+                
     </body>
 </html>
