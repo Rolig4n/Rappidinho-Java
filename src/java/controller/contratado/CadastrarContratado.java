@@ -102,15 +102,15 @@ public class CadastrarContratado extends HttpServlet {
 
             if (oContratado.getIdPessoa() == null) {
                 if (dao.cadastrar(oContratado)) {
-                    mensagem = "Contratado cadastrado com sucesso!";
+                    mensagem = "Contratado " + oContratado.getNomePessoa() + ", cadastrado com sucesso!";
                 } else {
-                    mensagem = "Problema ao cadastrar Contratado!";
+                    mensagem = "Problema ao cadastrar Contratado!" + " Verifique os dados e tente novamente !";
                 }
             } else {
                 if (dao.alterar(oContratado)) {
-                    mensagem = "Contratado alterado com sucesso!";
+                    mensagem = "Contratado " + oContratado.getNomePessoa() + ", alterado com sucesso!";
                 } else {
-                    mensagem = "Problema ao alterar Contratado!";
+                    mensagem = "Problema ao alterar Contratado!" + " Verifique os dados e tente novamente !";
                 }
             }
 

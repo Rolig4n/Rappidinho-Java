@@ -39,10 +39,11 @@ public class DadosContratante extends HttpServlet {
             
             GenericDAO dao = new CidadeDAO();
             request.setAttribute("cidades", dao.listar());
+ 
             request.getRequestDispatcher("cadastros/contratante/cadastrarContratante.jsp").forward(request, response);
             
         } catch (Exception ex){
-            System.out.println("Problemas ao listar Cidade! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao Servlet Dados Contratante Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
