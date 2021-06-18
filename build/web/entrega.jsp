@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <c:import url="head.jsp"></c:import>
+        <c:import url="/cabecalho.jsp"></c:import>
             <title>Index</title>
         </head>
 
@@ -21,10 +21,10 @@
                  data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
                 <!--Cabeçalho-->
-            <c:import url="cabecalho.jsp"></c:import>
+
 
                 <!--Menu-->
-            <c:import url="menu.jsp"></c:import>
+            <c:import url="/menu.jsp"></c:import>
 
                 <!--Conteudo-->
                 <div class="page-wrapper">
@@ -68,12 +68,9 @@
                 </div>
 
                 <!--Rodape-->
-                <c:import url="footer.jsp"></c:import>
-                </div>
+                <c:import url="/footer.jsp"></c:import>
             </div>
-
-            <!--Import dos scripts-->
-        <c:import url="scripts.jsp"></c:import>
+        </div>
 
     </body>
 </html>
