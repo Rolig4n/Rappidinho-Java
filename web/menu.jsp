@@ -3,7 +3,6 @@
     Created on : 06/05/2021, 18:28:41
     Author     : hiago
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <aside class="left-sidebar" data-sidebarbg="skin6">
     <!-- Sidebar scroll-->
@@ -11,6 +10,13 @@
         <!-- Big Sidebar navigation-->
         <nav class="sidebar-nav d-none d-xl-block">
             <ul id="sidebarnav">
+                <!-- Cadastros-->
+                <li class="sidebar-item pt-2">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastros.jsp"
+                       aria-expanded="false">
+                        <i class="fas fa-database" aria-hidden="true"></i>
+                        <span class="hide-menu">Cadastros</span>
+                    </a>
                 <!-- User Profile-->
                 <li class="sidebar-item pt-2">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.jsp"
