@@ -35,9 +35,9 @@ public class PessoaDAO {
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "INSERT INTO pessoa(nome_pessoa, email_pessoa, senha_pessoa, cpf_pessoa, telefone_pessoa, endereco_pessoa"
-                + "tipo_pessoa) VALUES (?, ?, md5(?), ?, ?, ?, ?) RETURNING id_pessoa;";
-
+        String sql = "INSERT INTO pessoa(nome_pessoa, email_pessoa, senha_pessoa, cpf_pessoa, telefone_pessoa, endereco_pessoa,"
+                + " tipo_pessoa, id_cidade) VALUES (?, ?, md5(?), ?, ?, ?, ?, ?);";
+        String lastinsert = "Select last_insert_id();";
         try {
 
             stmt = conn.prepareStatement(sql);
@@ -48,10 +48,12 @@ public class PessoaDAO {
             stmt.setString(5, pessoa.getTelefonePessoa());
             stmt.setString(6, pessoa.getEnderecoPessoa());
             stmt.setString(7, pessoa.getTipoPessoa());
-            rs = stmt.executeQuery();
+            stmt.setInt(8, pessoa.getCidade().getIdCidade());
+            stmt.executeUpdate();
+            rs = stmt.executeQuery(lastinsert);
 
             if (rs.next()) {
-                idPessoa = rs.getInt("id_pessoa");
+                idPessoa = rs.getInt("last_insert_id()");
             }
 
         } catch (SQLException ex) {

@@ -3,25 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.administrador;
+package controller.contratado;
 
-import DAO.AdministradorDAO;
-import DAO.GenericDAO;
+import DAO.ContratadoDAO;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Contratado;
+
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "MostrarFotoContratado", urlPatterns = {"/MostrarFotoContratado"})
+public class MostrarFotoContratado extends HttpServlet {
 
+    
+    private static final int BYTES_DOWNLOAD = 1024;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,16 +39,26 @@ public class CarregarAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
-        
+
         try {
-            GenericDAO dao = new AdministradorDAO();
-            
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
+            ContratadoDAO dao = new ContratadoDAO();
+            Contratado oContratado = dao.mostrarFoto(idPessoa);
+
+            InputStream inputStream = oContratado.getFotoContratado();
+            OutputStream outputStream = response.getOutputStream();
+
+            response.setHeader("Content-Disposition", "attachment; filename = " + oContratado.getIdPessoa() + ".jpg");
+
+            int read = 0;
+            final byte[] bytes = new byte[BYTES_DOWNLOAD];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+                outputStream.flush();
+            }
         } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
+            System.out.println("Problema ao carregar foto do contratado! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.administrador;
+package controller.entrega;
 
-import DAO.AdministradorDAO;
-import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "ExcluirEntrega", urlPatterns = {"/ExcluirEntrega"})
+public class ExcluirEntrega extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +32,17 @@ public class CarregarAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
-        
-        try {
-            GenericDAO dao = new AdministradorDAO();
-            
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
-            ex.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ExcluirEntrega</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ExcluirEntrega at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

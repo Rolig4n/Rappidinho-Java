@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.administrador;
+package controller.contratante;
 
-import DAO.AdministradorDAO;
+import DAO.ContratanteDAO;
 import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "ExcluirContratante", urlPatterns = {"/ExcluirContratante"})
+public class ExcluirContratante extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,16 +34,14 @@ public class CarregarAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
         
         try {
-            GenericDAO dao = new AdministradorDAO();
-            
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
+            GenericDAO dao = new ContratanteDAO();
+            dao.excluir(idPessoa);
+            request.getRequestDispatcher("ListarContratante").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
+            System.out.println("Problemas na servlet ao Excluir contratante "+ex.getMessage());
             ex.printStackTrace();
         }
     }

@@ -17,6 +17,16 @@ public class Cidade {
     public Cidade() {
     }
 
+
+    public Cidade(int idcidade) {
+        this.idCidade = idcidade;
+    }
+
+    public Cidade(String string) {
+        this.nomeCidade=string;
+    }
+
+
     /**
      * @return the idCidade
      */

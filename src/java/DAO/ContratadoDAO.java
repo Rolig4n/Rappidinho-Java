@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Administrador;
+import model.Contratado;
 import model.Cidade;
 import model.Estado;
 import utils.ConnectionFactory;
@@ -22,11 +22,11 @@ import utils.ConnectionFactory;
  *
  * @author fbrcmmelo
  */
-public class AdministradorDAO implements GenericDAO {
+public class ContratadoDAO implements GenericDAO {
 
     private Connection conn;
 
-    public AdministradorDAO() throws Exception {
+    public ContratadoDAO() throws Exception {
         try {
             this.conn = ConnectionFactory.getConnection();
             System.out.println("Banco acessado com Sucesso!");
@@ -37,22 +37,23 @@ public class AdministradorDAO implements GenericDAO {
 
     @Override
     public Boolean cadastrar(Object object) {
-        Administrador oAdministrador = (Administrador) object;
+        Contratado oContratado = (Contratado) object;
         PreparedStatement stmt = null;
-        String sql = "insert into administrador (rg_administrador, id_pessoa) values (?, ?)";
+        String sql = "insert into contratado (foto_contratado, cnh_contratado, id_pessoa) values (?, ?, ?)";
 
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, oAdministrador.getRgAdministrador());
+            stmt.setBinaryStream(1, oContratado.getFotoContratado(), oContratado.getFileInt());
+            stmt.setString(2, oContratado.getCnhContratado());
             try {
-                stmt.setInt(2, new PessoaDAO().cadastrar(oAdministrador));
+                stmt.setInt(3, new PessoaDAO().cadastrar(oContratado));
             } catch (Exception ex) {
                 Logger.getLogger(PessoaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
             stmt.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problemas ao cadastrar Administrador " + ex.getMessage());
+            System.out.println("Problemas ao cadastrar Contratado " + ex.getMessage());
             ex.printStackTrace();
             return false;
         } finally {
@@ -71,9 +72,9 @@ public class AdministradorDAO implements GenericDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*, a.rg_administrador , c.nome_cidade, e.sigla_estado from pessoa p\n" +
-"                inner join administrador a \n" +
-"                on p.id_pessoa = a.id_pessoa\n" +
+        String sql = "select p.*, con.foto_contratado, con.cnh_contratado, c.nome_cidade, e.sigla_estado from pessoa p\n" +
+"                inner join contratado con \n" +
+"                on p.id_pessoa = con.id_pessoa\n" +
 "                inner join cidade c \n" +
 "                on p.id_cidade = c.id_cidade \n" +
 "                inner join estado e\n" +
@@ -84,22 +85,22 @@ public class AdministradorDAO implements GenericDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Administrador oAdmin = new Administrador();
-                oAdmin.setIdPessoa(rs.getInt("id_pessoa"));
-                oAdmin.setNomePessoa(rs.getString("nome_pessoa"));
-                oAdmin.setEmailPessoa(rs.getString("email_pessoa"));
-                oAdmin.setCpfPessoa(rs.getString("cpf_pessoa"));
-                oAdmin.setRgAdministrador(rs.getString("rg_administrador"));
-                oAdmin.setEnderecoPessoa(rs.getString("endereco_pessoa"));
-                oAdmin.setTelefonePessoa(rs.getString("telefone_pessoa"));
-                oAdmin.setCidade(new Cidade(rs.getString("nome_cidade")));
-                oAdmin.setEstado(new Estado(rs.getString("sigla_estado")));
+                Contratado oContratado = new Contratado();
+                oContratado.setIdPessoa(rs.getInt("id_pessoa"));
+                oContratado.setNomePessoa(rs.getString("nome_pessoa"));
+                oContratado.setEmailPessoa(rs.getString("email_pessoa"));
+                oContratado.setCpfPessoa(rs.getString("cpf_pessoa"));
+                oContratado.setCnhContratado(rs.getString("cnh_contratado"));
+                oContratado.setEnderecoPessoa(rs.getString("endereco_pessoa"));
+                oContratado.setTelefonePessoa(rs.getString("telefone_pessoa"));
+                oContratado.setCidade(new Cidade(rs.getString("nome_cidade")));
+                oContratado.setEstado(new Estado(rs.getString("sigla_estado")));
 
-                resultado.add(oAdmin);
+                resultado.add(oContratado);
             }
 
         } catch (SQLException ex) {
-            System.out.println("Problemas ao listar Administrador! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao listar Contratado! Erro: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             try {
@@ -112,12 +113,46 @@ public class AdministradorDAO implements GenericDAO {
         return resultado;
     }
 
+    public Contratado mostrarFoto(int idPessoa) {
+
+        Contratado oContratado = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "select c.id_pessoa, c.foto_contratado from contratado c "
+                + "where c.id_pessoa = ?;";
+
+        try {
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idPessoa);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                oContratado = new Contratado();
+                oContratado.setIdPessoa(rs.getInt("id_pessoa"));
+                oContratado.setFotoContratado(rs.getBinaryStream("foto_contratado"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar Foto Contratado! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt, rs);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        return oContratado;
+    }
+
     @Override
     public void excluir(int idObject) {
-
+        
         PreparedStatement stmt = null;
 
-        String sqlA = "DELETE FROM administrador WHERE id_pessoa = ?;";
+        String sqlA = "DELETE FROM contratado WHERE id_pessoa = ?;";
         String sqlP = "DELETE FROM pessoa WHERE id_pessoa = ?;";
 
         try {
@@ -130,7 +165,7 @@ public class AdministradorDAO implements GenericDAO {
             stmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println("Problemas ao excluir administrador! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao excluir contratado! Erro: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             try {
@@ -140,18 +175,15 @@ public class AdministradorDAO implements GenericDAO {
                 ex.printStackTrace();
             }
         }
-
     }
 
-    @Override
+   @Override
     public Object carregar(int idObject) {
-
-        Administrador oAdmin = null;
+        Contratado oContratado = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
-        String sql = "SELECT p.*, a.id_administrador, a.rg_administrador FROM pessoa p, administrador a "
-                + "WHERE p.id_pessoa = a.id_pessoa AND p.id_pessoa = ?;";
+        String sql = "select p.*, c.id_contratado, c.foto_contratado, c.cnh_contratado from pessoa p, contratado c "
+                + "where p.id_pessoa = c.id_pessoa and p.id_pessoa = ?";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -159,43 +191,44 @@ public class AdministradorDAO implements GenericDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                oAdmin = new Administrador();
-                oAdmin.setIdPessoa(rs.getInt("id_pessoa"));
-                oAdmin.setNomePessoa(rs.getString("nome_pessoa"));
-                oAdmin.setEmailPessoa(rs.getString("email_pessoa"));
-                oAdmin.setCpfPessoa(rs.getString("cpf_pessoa"));
-                oAdmin.setRgAdministrador(rs.getString("rg_administrador"));
-                oAdmin.setEnderecoPessoa(rs.getString("endereco_pessoa"));
-                oAdmin.setTelefonePessoa(rs.getString("telefone_pessoa"));
-                oAdmin.setCidade(new Cidade(rs.getString("nome_cidade")));
+                oContratado = new Contratado();
+                oContratado.setFotoContratado(rs.getBinaryStream("foto_contratado"));
+                oContratado.setIdPessoa(rs.getInt("id_pessoa"));
+                oContratado.setNomePessoa(rs.getString("nome_pessoa"));
+                oContratado.setEmailPessoa(rs.getString("email_pessoa"));
+                oContratado.setCpfPessoa(rs.getString("cpf_pessoa"));
+                oContratado.setCnhContratado(rs.getString("cnh_contratado"));
+                oContratado.setEnderecoPessoa(rs.getString("endereco_pessoa"));
+                oContratado.setTelefonePessoa(rs.getString("telefone_pessoa"));
+                oContratado.setCidade(new Cidade(rs.getString("nome_cidade")));
             }
-
         } catch (SQLException ex) {
-            System.out.println("Problemas ao carregar Administrador! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao Carregar Contratado ! Erro: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
             try {
-                ConnectionFactory.closeConnection(conn, stmt, rs);
+                ConnectionFactory.closeConnection(conn, stmt);
             } catch (Exception ex) {
                 System.out.println("Problemas ao fechar conexão! Erro: " + ex.getMessage());
                 ex.printStackTrace();
             }
         }
-        return oAdmin;
+        return oContratado;
     }
 
     @Override
     public Boolean alterar(Object object) {
-        Administrador oAdmin = (Administrador) object;
+        Contratado oContratado = (Contratado) object;
         PreparedStatement stmt = null;
-        String sql = "update administrador set rg_administrador = ? where id_pessoa= ?";
+        String sql = "update contratado set foto_contratado = ?, cnh_contratado = ? where id_pessoa= ?";
 
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, oAdmin.getRgAdministrador());
-            stmt.setInt(2, oAdmin.getIdPessoa());
+            stmt.setBinaryStream(1, oContratado.getFotoContratado(), oContratado.getFileInt());
+            stmt.setString(2, oContratado.getCnhContratado());
+            stmt.setInt(3, oContratado.getIdPessoa());
 
-            if (new PessoaDAO().alterar(oAdmin)) {
+            if (new PessoaDAO().alterar(oContratado)) {
                 stmt.executeUpdate();
                 return true;
             } else {
@@ -203,7 +236,7 @@ public class AdministradorDAO implements GenericDAO {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Problemas ao alterar Administrador ! Erro: " + ex.getMessage());
+            System.out.println("Problemas ao alterar Contratado ! Erro: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         } catch (Exception ex) {
@@ -218,7 +251,6 @@ public class AdministradorDAO implements GenericDAO {
                 ex.printStackTrace();
             }
         }
-
     }
 
 }

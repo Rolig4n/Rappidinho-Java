@@ -5,7 +5,8 @@
  */
 package controller.administrador;
 
-import DAO.AdministradorDAO;
+import DAO.CidadeDAO;
+import DAO.EstadoDAO;
 import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "DadosAdministrador", urlPatterns = {"/DadosAdministrador"})
+public class DadosAdministrador extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +36,15 @@ public class CarregarAdministrador extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
-        
-        try {
-            GenericDAO dao = new AdministradorDAO();
+       try{
             
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
+            GenericDAO dao = new CidadeDAO();
+            request.setAttribute("cidades", dao.listar());
+            
+            request.getRequestDispatcher("cadastros/administrador/cadastrarAdministrador.jsp").forward(request, response);
+            
+        } catch (Exception ex){
+            System.out.println("Problemas ao listar Cidade! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

@@ -11,9 +11,10 @@ import java.io.InputStream;
  *
  * @author fbrcmmelo
  */
-public class Contratante {
+public class Contratante extends Pessoa {
     private int idContratante;
     private InputStream fotoContratante;
+    private int fileInt;
 
     public Contratante() {
     }
@@ -45,6 +46,19 @@ public class Contratante {
     public void setFotoContratante(InputStream fotoContratante) {
         this.fotoContratante = fotoContratante;
     }
-    
+
+    /**
+     * @return the fileInt
+     */
+    public int getFileInt() {
+        return fileInt;
+    }
+
+    /**
+     * @param fileInt the fileInt to set
+     */
+    public void setFileInt(int fileInt) {
+        this.fileInt = fileInt;
+    }
     
 }

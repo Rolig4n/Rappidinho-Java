@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.administrador;
+package controller.cidade;
 
-import DAO.AdministradorDAO;
+import DAO.CidadeDAO;
 import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "ExcluirCidade", urlPatterns = {"/ExcluirCidade"})
+public class ExcluirCidade extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +34,21 @@ public class CarregarAdministrador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+       
+         int idCidade = Integer.parseInt(request.getParameter("idcidade"));
         
-        int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
-        
-        try {
-            GenericDAO dao = new AdministradorDAO();
+        try{
             
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
+            GenericDAO dao = new CidadeDAO();
+            dao.excluir(idCidade);
+            request.getRequestDispatcher("ListarCidade").forward(request, response);                    
+            
+        } catch(Exception ex){
+            System.out.println("Problemas ao excluir Cidade! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
+    
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

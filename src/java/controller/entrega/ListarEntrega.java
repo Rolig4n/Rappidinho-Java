@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.administrador;
+package controller.entrega;
 
-import DAO.AdministradorDAO;
+import DAO.EntregaDAO;
 import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarAdministrador", urlPatterns = {"/CarregarAdministrador"})
-public class CarregarAdministrador extends HttpServlet {
+@WebServlet(name = "ListarEntrega", urlPatterns = {"/ListarEntrega"})
+public class ListarEntrega extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +35,14 @@ public class CarregarAdministrador extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int idPessoa = Integer.parseInt(request.getParameter("idpessoa"));
         
         try {
-            GenericDAO dao = new AdministradorDAO();
+            GenericDAO dao = new EntregaDAO();
             
-            request.setAttribute("administrador", dao.carregar(idPessoa));
-            request.getRequestDispatcher("DadosAdministrador").forward(request, response);
+            request.setAttribute("entregas", dao.listar());
+            request.getRequestDispatcher("cadastros/entrega/listarEntrega.jsp").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na servlet ao Carregar Administrador "+ex.getMessage());
+            System.out.println("Problemas na Servlet ao Listar Entregas Erro "+ex.getMessage());
             ex.printStackTrace();
         }
     }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <c:import url="head.jsp"></c:import>
+        <c:import url="/cabecalho.jsp"></c:import>
             <title>Painel de controle</title>
             <style type="text/css">
                 /* Always set the map height explicitly to define the size of the div
@@ -29,10 +29,10 @@
                  data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
                 <!--Cabecalho-->
-            <c:import url="cabecalho.jsp"></c:import>
+
 
                 <!--Menu-->
-            <c:import url="menu.jsp"></c:import>
+            <c:import url="/menu.jsp"></c:import>
 
                 <!--Conteudo-->
                 <div class="page-wrapper">
@@ -113,11 +113,8 @@
                 </div>
 
                 <!--Rodape-->
-                <c:import url="footer.jsp"></c:import>
+                <c:import url="/footer.jsp"></c:import>
                 </div>
-
-                <!--Import dos scripts-->
-            <c:import url="scripts.jsp"></c:import>
             <!--Script Mapa-->
             <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
             <script async

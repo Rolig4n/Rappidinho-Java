@@ -48,7 +48,7 @@ public class CadastrarCidade extends HttpServlet {
             
             if(request.getParameter("idcidade").equals("")){
                 if(dao.cadastrar(oCidade)){
-                    mensagem = "Cidade "+ oCidade.getNomeCidade() +"Cadastrada com Sucesso !";
+                    mensagem = "Cidade "+ oCidade.getNomeCidade() +" Cadastrada com Sucesso !";
                 }else
                     mensagem = "Problemas ao Cadastrar Cidade"+ " Verifique os dados Novamente";
             }else{
