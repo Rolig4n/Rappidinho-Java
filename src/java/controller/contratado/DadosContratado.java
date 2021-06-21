@@ -41,7 +41,7 @@ public class DadosContratado extends HttpServlet {
             request.getRequestDispatcher("cadastros/contratado/cadastrarContratado.jsp").forward(request, response);
             
         } catch (Exception ex){
-            System.out.println("Problemas ao listar Cidade! Erro: " + ex.getMessage());
+            System.out.println("Problemas na Servlet DadosContratado Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

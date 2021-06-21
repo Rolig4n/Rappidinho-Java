@@ -40,6 +40,7 @@ public class DadosAdministrador extends HttpServlet {
             
             GenericDAO dao = new CidadeDAO();
             request.setAttribute("cidades", dao.listar());
+            
             request.getRequestDispatcher("cadastros/administrador/cadastrarAdministrador.jsp").forward(request, response);
             
         } catch (Exception ex){

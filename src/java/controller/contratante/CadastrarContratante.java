@@ -77,7 +77,7 @@ public class CadastrarContratante extends HttpServlet {
                     } else if (dados.equals("cpfpessoa")) {
                         oContratante.setCpfPessoa(fileItem.getString());
                     } else if (dados.equals("telefonepessoa")) {
-                        oContratante.setSenhaPessoa(fileItem.getString());
+                        oContratante.setTelefonePessoa(fileItem.getString());
                     } else if (dados.equals("enderecopessoa")) {
                         oContratante.setEnderecoPessoa(fileItem.getString());
                     } else if (dados.equals("idcidade")) {
@@ -100,15 +100,15 @@ public class CadastrarContratante extends HttpServlet {
 
             if (oContratante.getIdPessoa() == null) {
                 if (dao.cadastrar(oContratante)) {
-                    mensagem = "Contratante cadastrado com sucesso!";
+                    mensagem = "Contratante " + oContratante.getNomePessoa() + ", cadastrado com sucesso!";
                 } else {
-                    mensagem = "Problema ao cadastrar Contratante!";
+                    mensagem = "Problema ao cadastrar Contratante!" + " Verifique os dados e tente novamente !" ;
                 }
             } else {
                 if (dao.alterar(oContratante)) {
-                    mensagem = "Contratante alterado com sucesso!";
+                    mensagem = "Contratante " + oContratante.getNomePessoa() + ", alterado com sucesso!";
                 } else {
-                    mensagem = "Problema ao alterar Contratante!";
+                    mensagem = "Problema ao alterar Contratante!" + " Verifique os dados e tente novamente !";
                 }
             }
 
