@@ -2,30 +2,50 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-  <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Rappdinho</title>
-    </head>
-    <body>
-        <div id="login" align="center">
-        <h1>Acesso ao Sistema</h1>
-        
-        <form name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">
-            
-            <p><label for="emailpessoa">Email: </label><input type="email" name="emailpessoa" id="emailpessoa" required /></p>
-            <p><label for="senhapessoa">Senha: </label><input type="password" name="senhapessoa" id="senhapessoa" required /></p>
-            <input type="hidden" name="acao" value="logar">
-            <p><input type="submit" name="logar" id="logar" value="Acessar" /></p>            
-        </form>
+    <head>
+        <c:import url="head.jsp"></c:import>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Rappidinho Delivery</title>
+        </head>
+        <body>
+            <!--Loader-->
+            <div class="preloader">
+                <div class="lds-ripple">
+                    <div class="lds-pos"></div>
+                    <div class="lds-pos"></div>
+                </div>
+            </div>
+
+            <div class="error-box" id="login" align="center">
+                <img src="plugins/images/Rappdinho A.png" width="380" alt="logo" />
+                <div class="row justify-content-center card-body">
+                    <h1 class="text-danger">Login</h1>
+                    <form class="col-8 form-horizontal form-material" name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">
+                    <div class="form-group mb-4">
+                        <label class="col-md-12 p-0" for="emailpessoa">Email</label>
+                        <div class="col-md-6 border-bottom p-0">
+                            <input type="email" name="emailpessoa" id="emailpessoa" class="form-control p-0 border-0" required />
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label class="col-md-12 p-0" for="senhapessoa">Senha</label>
+                        <div class="col-md-6 border-bottom p-0">
+                            <input type="password" name="senhapessoa" id="senhapessoa" class="form-control p-0 border-0" required />
+                        </div>
+                    </div>
+                    <input type="hidden" name="acao" value="logar">
+                    <p><input type="submit" name="logar" id="logar" value="Acessar" class="btn btn-danger text-white"/></p>            
+                </form>
+                <div id="error" align="center">
+                    ${erro}    
+                </div>
+                <div id ="cadastrar" align="center">
+                    <p>Não tem conta ? <a href="Cadastrar" role="button">Cadastrar-se</a></p>
+                </div>
+            </div>
         </div>
-        <div id="error" align="center">
-        ${erro}    
-        </div>
-        <div id ="cadastrar" align="center">
-            <p>Não tem conta ? <a href="Cadastrar" role="button">Cadastrar-se</a></p>
-        </div>
-        
-            
-                
+
+        <!--Import dos scripts-->
+        <c:import url="scripts.jsp"></c:import>
     </body>
 </html>

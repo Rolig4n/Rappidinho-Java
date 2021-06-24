@@ -10,21 +10,23 @@
         <!-- Big Sidebar navigation-->
         <nav class="sidebar-nav d-none d-xl-block">
             <ul id="sidebarnav">
-                <!-- Cadastros-->
-                <li class="sidebar-item pt-2">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastros.jsp"
-                       aria-expanded="false">
-                        <i class="fas fa-database" aria-hidden="true"></i>
-                        <span class="hide-menu">Cadastros</span>
-                    </a>
                 <!-- User Profile-->
-                <li class="sidebar-item pt-2">
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.jsp"
                        aria-expanded="false">
                         <i class="fas fa-chart-pie" aria-hidden="true"></i>
                         <span class="hide-menu">Painel de controle</span>
                     </a>
                 </li>
+                <!-- Cadastros-->
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastros.jsp"
+                       aria-expanded="false">
+                        <i class="fas fa-database" aria-hidden="true"></i>
+                        <span class="hide-menu">Cadastros</span>
+                    </a>
+                </li>
+                <!-- Perfil -->
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="perfil.jsp"
                        aria-expanded="false">
@@ -77,14 +79,21 @@
             </ul>
         </nav>
         <!-- End Big Sidebar navigation -->
-        
+
         <!-- Sidebar navigation-->
-        <nav class="sidebar-nav d-xl-none">
+        <nav class="sidebar-nav d-xl-none d-">
             <ul id="sidebarnav">
                 <!-- User Profile-->
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="dashboard.jsp">
                         <i class="fas fa-chart-pie"></i>
+                    </a>
+                </li>
+                <!-- Cadastros-->
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastros.jsp"
+                       aria-expanded="false">
+                        <i class="fas fa-database" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="sidebar-item">

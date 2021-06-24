@@ -9,25 +9,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <c:import url="/cabecalho.jsp"></c:import>
+        <c:import url="/head.jsp"></c:import>
             <title>Cadastros</title>
         </head>
 
         <body>
-            <!--Loader-->
-            <div class="preloader">
-                <div class="lds-ripple">
-                    <div class="lds-pos"></div>
-                    <div class="lds-pos"></div>
-                </div>
-            </div>
 
             <!--Corpo da pagina-->
             <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
                  data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
                 <!--CabeÃ§alho-->
-
+            <c:import url="/cabecalho.jsp"></c:import>
 
                 <!--Menu-->
             <c:import url="/menu.jsp"></c:import>
@@ -92,7 +85,7 @@
 
                 <!--Rodape-->
                 <c:import url="/footer.jsp"></c:import>
-                </div>
             </div>
+        </div>
     </body>
 </html>

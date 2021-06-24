@@ -1,7 +1,7 @@
 <%-- 
-    Document   : cadastrarAdministrador
-    Created on : 30/05/2021, 20:41:17
-    Author     : fbrcmmelo
+   Document   : cadastrarAdministrador
+   Created on : 30/05/2021, 20:41:17
+   Author     : fbrcmmelo
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,10 +9,10 @@
 <!DOCTYPE html>
 
 <html>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <title>Cadastro de Admin's</title>
-
+    </head>
     <body>
     <tr>
     <p>Cadastro de Administradores</p>
@@ -35,7 +35,7 @@
     <label><input type="text" id="enderecopessoa" value="${administrador.enderecoPessoa}" required="true" placeholder="Rua .., numero .." name="enderecopessoa" maxlength="100"/></label>
     <p>Telefone:</p>
     <label><input type="text" id="telefonepessoa" value="${administrador.telefonePessoa}" required="true" placeholder="(xx)99xxx-xxxx" name="telefonepessoa" maxlength="14"/></label>
-   <p>Cidade:</p>
+    <p>Cidade:</p>
     <select name="idcidade" id="idcidade">
         <c:forEach var="cidade" items="${cidades}">                        
             <option value="${cidade.idCidade}" ${pessoa.cidade.idCidade == cidade.idCidade ? 'selected' : ''} >${cidade.nomeCidade}</option>                               
@@ -49,7 +49,6 @@
 <br></br>
 <div align="center">
     <a href="ListarAdministrador">Voltar</a>
-
 </div>
 </body>
 </html>
