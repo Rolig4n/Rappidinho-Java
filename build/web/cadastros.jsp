@@ -10,7 +10,7 @@
 <html>
     <head>
         <c:import url="/head.jsp"></c:import>
-            <title>Cadastros</title>
+            <title>Rappidinho - Cadastros</title>
         </head>
 
         <body>
@@ -85,7 +85,9 @@
 
                 <!--Rodape-->
                 <c:import url="/footer.jsp"></c:import>
+                </div>
             </div>
-        </div>
+            <!--Scripts-->
+        <c:import url="/scripts.jsp"></c:import>
     </body>
 </html>

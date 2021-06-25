@@ -15,16 +15,15 @@
                     <title>Rappidinho</title>
                 </head>
                 <body>
-
                     <!--Corpo da pagina-->
                     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
                          data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
                         <!--Cabeçalho-->
-                    <c:import url="cabecalho.jsp"></c:import>
+                    <c:import url="../cabecalho.jsp"></c:import>
 
                         <!--Menu-->
-                    <c:import url="menu.jsp"></c:import>
+                    <c:import url="../menu.jsp"></c:import>
 
                         <!--Conteudo-->
 
@@ -39,7 +38,7 @@
                     </div>
 
                     <!--Import dos scripts-->
-                <c:import url="scripts.jsp"></c:import>
+                <c:import url="../scripts.jsp"></c:import>
 
                 </body>
             </html>

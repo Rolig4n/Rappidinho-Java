@@ -17,7 +17,7 @@
             </div>
 
             <div class="error-box" id="login" align="center">
-                <img src="plugins/images/Rappdinho A.png" width="380" alt="logo" />
+                <img src="${pageContext.request.contextPath}/plugins/images/Rappdinho A.png" width="380" alt="logo" />
                 <div class="row justify-content-center card-body">
                     <h1 class="text-danger">Login</h1>
                     <form class="col-8 form-horizontal form-material" name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">

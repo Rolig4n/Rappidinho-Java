@@ -4,7 +4,7 @@
 <html>
     <head>
         <c:import url="head.jsp"></c:import>
-            <title>404</title>
+            <title>Rappidinho - 404</title>
         </head>
 
         <body>

@@ -12,9 +12,9 @@
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="plugins/images/Rappdinho_icon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/plugins/images/Rappdinho_icon.png">
 <!-- Custom CSS -->
-<link href="plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
-<link rel="stylesheet" href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+<link href="${pageContext.request.contextPath}/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
 <!-- Custom CSS -->
-<link href="css/style.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/style.min.css" rel="stylesheet">

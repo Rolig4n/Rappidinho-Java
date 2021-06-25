@@ -23,12 +23,12 @@
                     <!-- Logo icon -->
                     <b class="logo-icon d-none d-xl-block">
                         <!-- Dark Logo icon -->
-                        <img src="plugins/images/Rappdinho A.png" width="200" alt="homepage" />
+                        <img src="${pageContext.request.contextPath}/plugins/images/Rappdinho A.png" width="200" alt="homepage" />
                     </b>
                     <!--End Logo icon -->
                     <b class="logo-icon d-xl-none">
                         <!-- Dark Logo icon -->
-                        <img src="plugins/images/Rappdinho_icon.png" width="50" alt="homepage" />
+                        <img src="${pageContext.request.contextPath}/plugins/images/Rappdinho_icon.png" width="50" alt="homepage" />
                     </b>
                 </a>
                 <!-- ============================================================== -->
@@ -67,7 +67,7 @@
                     <li>
                         <a class="profile-pic" href="perfil.jsp">
                             <!-- src="caminho do banco" -->
-                            <img src="plugins/images/users/varun.jpg" alt="user-img" width="36" 
+                            <img src="${pageContext.request.contextPath}/plugins/images/users/varun.jpg" alt="user-img" width="36" 
                                  class="img-circle"><span class="text-white font-medium">Nome Perfil</span></a>
                     </li>
                     <!-- ============================================================== -->

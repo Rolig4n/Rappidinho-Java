@@ -12,7 +12,7 @@
             <ul id="sidebarnav">
                 <!-- User Profile-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.jsp"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/dashboard.jsp"
                        aria-expanded="false">
                         <i class="fas fa-chart-pie" aria-hidden="true"></i>
                         <span class="hide-menu">Painel de controle</span>
@@ -20,7 +20,7 @@
                 </li>
                 <!-- Cadastros-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="cadastros.jsp"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/cadastros.jsp"
                        aria-expanded="false">
                         <i class="fas fa-database" aria-hidden="true"></i>
                         <span class="hide-menu">Cadastros</span>
@@ -28,7 +28,7 @@
                 </li>
                 <!-- Perfil -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="perfil.jsp"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/perfil.jsp"
                        aria-expanded="false">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <span class="hide-menu">Perfil</span>
@@ -36,14 +36,14 @@
                 </li>
                 <!-- Menu customizado / Depende Tipo Usuario-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="entrega.jsp"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/entrega.jsp"
                        aria-expanded="false">
                         <i class="fas fa-boxes" aria-hidden="true"></i>
                         <span class="hide-menu">Minhas estregas</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/#"
                        aria-expanded="false">
                         <i class="fas fa-chart-bar" aria-hidden="true"></i>
                         <span class="hide-menu">Relatorio entregas</span>
@@ -51,28 +51,28 @@
                 </li>
                 <!-- Fim Menu customizado -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/#"
                        aria-expanded="false">
                         <i class="fas fa-share-alt" aria-hidden="true"></i>
                         <span class="hide-menu">Compartilhar</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/#"
                        aria-expanded="false">
                         <i class="fa fa-exclamation" aria-hidden="true"></i>
                         <span class="hide-menu">Relatar ERRO</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/#"
                        aria-expanded="false">
                         <i class="fa fa-power-off" aria-hidden="true"></i>
                         <span class="hide-menu">Sair</span>
                     </a>
                 </li>
                 <li class="text-center p-20 upgrade-btn">
-                    <a href="#"
+                    <a href="${pageContext.request.contextPath}/#"
                        class="btn d-grid btn-danger text-white" target="_blank">
                         Baixe agora <i class="fab fa-android" aria-hidden="true"></i></a>
                 </li>
@@ -81,7 +81,7 @@
         <!-- End Big Sidebar navigation -->
 
         <!-- Sidebar navigation-->
-        <nav class="sidebar-nav d-xl-none d-">
+        <nav class="sidebar-nav d-xl-none">
             <ul id="sidebarnav">
                 <!-- User Profile-->
                 <li class="sidebar-item">

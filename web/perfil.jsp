@@ -40,44 +40,44 @@
                     <div class="col-xlg-6 col-lg-10 col-md-10">
                         <div class="card">
                             <div class="row justify-content-center card-body">
-                                <form class="col-8 form-horizontal form-material" action="atualizarPerfil" name="atualizarPerfil" method="POST">
-                                    <div class="form-group mb-4">
+                                <form class="col-10 row form-horizontal form-material" action="atualizarPerfil" name="atualizarPerfil" method="POST">
+                                    <div class="form-group col-md-10">
                                         <label class="col-md-12 p-0">Nome completo</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="${null}" class="form-control p-0 border-0">
+                                            <input type="text" id="nomepessoa" value="${administrador.nomePessoa}" required="true" placeholder="Nome" name="nomepessoa" maxlength="100" class="form-control p-0 border-0">
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-md-8">
                                         <label for="example-email" class="col-md-12 p-0">E-mail</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="email" value="${null}" class="form-control p-0 border-0" name="example-email" id="example-email">
+                                            <input type="text" id="emailpessoa" value="${administrador.emailPessoa}" required="true" placeholder="Email" name="emailpessoa" maxlength="100" class="form-control p-0 border-0">
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
-                                        <label class="col-md-12 p-0">Telefone</label>
-                                        <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="${null}" class="form-control p-0 border-0">
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-md-4">
                                         <label class="col-md-12 p-0">Senha</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="password" value="${null}" class="form-control p-0 border-0"><i ></i>
+                                            <input type="password" id="senhapessoa" value="${administrador.senhaPessoa}" required="true" placeholder="Senha" name="senhapessoa" maxlength="100" class="form-control p-0 border-0">
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-12">
+                                        <label class="col-md-12 p-0">Telefone</label>
+                                        <div class="col-md-12 border-bottom p-0">
+                                            <input type="text" id="telefonepessoa" value="${administrador.telefonePessoa}" required="true" placeholder="(xx)99xxx-xxxx" name="telefonepessoa" maxlength="14" class="form-control p-0 border-0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
                                         <label class="col-md-12 p-0">Endereço</label>
                                         <div class="col-md-12 border-bottom p-0">
-                                            <input type="text" value="${null}" class="form-control p-0 border-0">
+                                            <input type="text" id="enderecopessoa" value="${administrador.enderecoPessoa}" required="true" placeholder="Rua exemplo, 0000, bairro" name="enderecopessoa" maxlength="100" class="form-control p-0 border-0">
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-12">
                                         <label class="col-md-12 p-0">Descrição do perfil</label>
                                         <div class="col-md-12 border-bottom p-0">
                                             <textarea rows="2" class="form-control p-0 border-1">${null}</textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-12">
                                         <label class="col-sm-12">Tipo Perfil</label>
                                         <div class="col-sm-12 border-bottom">
                                             <select class="form-select shadow-none p-0 border-0 form-control-line">
@@ -89,7 +89,7 @@
                                     <!-- Mostrar campo veiculos caso entregador -->
                                     <c:choose>
                                         <c:when test="${null.equals(entregador)}">
-                                            <div class="form-group mb-4">
+                                            <div class="form-group col-12">
                                                 <label class="col-sm-12">Veiculo</label>
                                                 <div class="col-sm-12 border-bottom">
                                                     <select class="form-select shadow-none p-0 border-0 form-control-line">
@@ -101,7 +101,7 @@
                                             </div>
                                         </c:when>
                                     </c:choose>
-                                    <div class="form-group mb-4">
+                                    <div class="form-group col-12">
                                         <div class="col-sm-12">
                                             <button class="btn btn-success">Atualizar perfil</button>
                                         </div>
