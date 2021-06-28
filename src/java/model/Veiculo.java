@@ -14,6 +14,9 @@ public class Veiculo {
     private String nomeVeiculo;
     private String renavamVeiculo;
     private String tipoVeiculo;
+    private Contratado contratado;
+    private Pessoa pessoa;
+    
 
     public Veiculo() {
     }
@@ -72,6 +75,34 @@ public class Veiculo {
      */
     public void setTipoVeiculo(String tipoVeiculo) {
         this.tipoVeiculo = tipoVeiculo;
+    }
+
+    /**
+     * @return the contratado
+     */
+    public Contratado getContratado() {
+        return contratado;
+    }
+
+    /**
+     * @param contratado the contratado to set
+     */
+    public void setContratado(Contratado contratado) {
+        this.contratado = contratado;
+    }
+
+    /**
+     * @return the pessoa
+     */
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    /**
+     * @param pessoa the pessoa to set
+     */
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
     
     

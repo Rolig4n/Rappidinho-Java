@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.veiculo;
 
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
+import DAO.VeiculoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "ExcluirVeiculo", urlPatterns = {"/ExcluirVeiculo"})
+public class ExcluirVeiculo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,16 +34,18 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
+        int idVeiculo = Integer.parseInt(request.getParameter("idveiculo"));
         
         try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+            GenericDAO dao = new VeiculoDAO();
+            dao.excluir(idVeiculo);
+           
+            request.getRequestDispatcher("ListarVeiculo").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            System.out.println("Problemas na servlet ao Listar Veiculo "+ex.getMessage());
             ex.printStackTrace();
-        }
+        
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

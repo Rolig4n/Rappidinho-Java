@@ -5,22 +5,24 @@
  */
 package controller.entrega;
 
-import DAO.GenericDAO;
 import DAO.EntregaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Entrega;
+import utils.Conversoes;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "AlterarStatusEntrega", urlPatterns = {"/AlterarStatusEntrega"})
+public class AlterarStatusEntrega extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,16 +36,26 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
+        String mensagem = null;
+        Entrega oEntrega = new Entrega();
         
         try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+            
+            EntregaDAO dao = new EntregaDAO();
+            if (dao.alterarStatusEntrega(Integer.parseInt(request.getParameter("identrega")), request.getParameter("statusentrega").toUpperCase())){
+                mensagem = "Status da Entrega alterado para: " + request.getParameter("statusentrega").toUpperCase();
+            } else {
+                mensagem = "Problemas ao alterar o Status da Entrega!";
+            }
+            
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            System.out.println("Problemas ao alterar status da Entrega! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
+        
+        request.setAttribute("resposta", mensagem);
+        request.getRequestDispatcher("ListarEntrega").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

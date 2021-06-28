@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.rota;
 
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
+import DAO.RotaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,13 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Contratado;
+import model.Rota;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "CadastrarRota", urlPatterns = {"/CadastrarRota"})
+public class CadastrarRota extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,14 +36,40 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
         
+        String mensagem = null;
+        
+        Rota oRota = new Rota();
+
+        oRota.setNomeRota(request.getParameter("nomerota"));
+        oRota.setLatSaidaRota(Double.parseDouble(request.getParameter("latsaidarota")));
+        oRota.setLngSaidaRota(Double.parseDouble(request.getParameter("lngsaidarota")));
+        oRota.setLatChegadaRota(Double.parseDouble(request.getParameter("latchegadarota")));
+        oRota.setLngChegadaRota(Double.parseDouble(request.getParameter("lngchegadarota")));
+        oRota.setStatusRota("A");
+        oRota.setContratado(new Contratado(Integer.parseInt(request.getParameter("idpessoa"))));
+
         try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+            GenericDAO dao = new RotaDAO();
+  
+            if(request.getParameter("idrota").equals("")) {
+                if (dao.cadastrar(oRota)) {
+                    mensagem = "Rota " + oRota.getNomeRota()+ ", cadastrado com Sucesso!";
+                } else {
+                    mensagem = "Erro ao Cadastrar seus dados, tente novamente!";
+                }
+            } else {
+                oRota.setIdRota(Integer.parseInt(request.getParameter("idrota")));
+                if (dao.alterar(oRota)) {
+                    mensagem = "Rota " + oRota.getNomeRota()+ ", alterado os dados com Sucesso!";
+                } else {
+                    mensagem = "Erro ao alterar seus dados, tente novamente!";
+                }
+            }
+            request.setAttribute("mensagem", mensagem);
+            request.getRequestDispatcher("ListarRota").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            System.out.println("Problemas na servlet ao Cadastrar Rota "+ex.getMessage());
             ex.printStackTrace();
         }
     }

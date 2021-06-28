@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.pedido;
 
+import DAO.PedidoDAO;
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "ListarPedido", urlPatterns = {"/ListarPedido"})
+public class ListarPedido extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +33,20 @@ public class CarregarEntrega extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
+        response.setContentType("text/html;charset=iso-8859-1");
         
-        try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+      try{
+            
+            GenericDAO dao = (GenericDAO) new PedidoDAO();
+            request.setAttribute("pedidos", dao.listar());
+            request.getRequestDispatcher("cadastros/pedido/listarPedido.jsp").forward(request, response);
+            
+        } catch (Exception ex){
+            System.out.println("Problemas ao listar Tipo! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
-    }
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

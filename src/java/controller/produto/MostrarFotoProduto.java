@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.produto;
 
-import DAO.GenericDAO;
-import DAO.EntregaDAO;
+import DAO.ProdutoDAO;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Produto;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "MostrarFotoProduto", urlPatterns = {"/MostrarFotoProduto"})
+public class MostrarFotoProduto extends HttpServlet {
 
+    private static final int BYTES_DOWNLOAD = 1024;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,14 +37,26 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
-        
+        int idProduto = Integer.parseInt(request.getParameter("idproduto"));
+
         try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+            ProdutoDAO dao = new ProdutoDAO();
+            Produto oProduto = dao.mostrarFoto(idProduto);
+
+            InputStream inputStream = oProduto.getFotoProduto();
+            OutputStream outputStream = response.getOutputStream();
+
+            response.setHeader("Content-Disposition", "attachment; filename = " + oProduto.getIdProduto() + ".jpg");
+
+            int read = 0;
+            final byte[] bytes = new byte[BYTES_DOWNLOAD];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+                outputStream.flush();
+            }
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            System.out.println("Problema ao carregar foto do produto! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.pedido;
 
+import DAO.PedidoDAO;
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "ExcluirPedido", urlPatterns = {"/ExcluirPedido"})
+public class ExcluirPedido extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +33,15 @@ public class CarregarEntrega extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
-        
-        try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
-            ex.printStackTrace();
+        response.setContentType("text/html;charset=iso-8859-1");
+       int idPedido = Integer.parseInt(request.getParameter("idpedido"));
+        try{
+            GenericDAO dao = (GenericDAO) new PedidoDAO();
+            dao.excluir(idPedido);
+            
+            request.getRequestDispatcher("ListarPedido").forward(request, response);
+        } catch (Exception ex){
+            System.out.println("Problemas na Servlet ao Excluir Pedido "+ex.getMessage());ex.printStackTrace();
         }
     }
 

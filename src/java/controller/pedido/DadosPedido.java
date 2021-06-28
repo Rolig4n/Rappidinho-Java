@@ -3,24 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.pedido;
 
+import DAO.ContratadoDAO;
+import DAO.PedidoDAO;
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
+import DAO.PessoaDAO;
+import DAO.ProdutoDAO;
+import DAO.RotaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Pedido;
+import model.Pessoa;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "DadosPedido", urlPatterns = {"/DadosPedido"})
+public class DadosPedido extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,14 +41,28 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
-        
-        try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+
+        try{
+            Pedido oPedido = new Pedido();
+            Date dataPedido = oPedido.getDataPedido();
+            request.setAttribute("datapedido", dataPedido);
+            
+            PessoaDAO daopessoa = new PessoaDAO();
+            request.setAttribute("pessoas", daopessoa.listar());
+            
+            GenericDAO daorota = new RotaDAO();
+            request.setAttribute("rotas", daorota.listar());
+            
+            GenericDAO daocontratado = new ContratadoDAO();
+            request.setAttribute("contratados", daocontratado.listar());
+            
+            GenericDAO daoproduto = new ProdutoDAO();
+            request.setAttribute("produtos", daoproduto.listar());
+            
+            request.getRequestDispatcher("cadastros/pedido/cadastrarPedido.jsp").forward(request, response);
+            
+        } catch (Exception ex){
+            System.out.println("Problemas ao listar Pedido! Erro: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

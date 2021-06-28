@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.entrega;
+package controller.veiculo;
 
 import DAO.GenericDAO;
-import DAO.EntregaDAO;
+import DAO.VeiculoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,13 +14,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Contratado;
+import model.Pessoa;
+import model.Veiculo;
 
 /**
  *
  * @author fbrcmmelo
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "CadastrarVeiculo", urlPatterns = {"/CadastrarVeiculo"})
+public class CadastrarVeiculo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,14 +37,33 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
-        
+
+        String mensagem = null;
+        Veiculo oVeiculo = new Veiculo();
+        oVeiculo.setNomeVeiculo(request.getParameter("nomeveiculo"));
+        oVeiculo.setRenavamVeiculo(request.getParameter("renavamveiculo"));
+        oVeiculo.setTipoVeiculo(request.getParameter("tipoveiculo"));
+        oVeiculo.setContratado(new Contratado(Integer.parseInt(request.getParameter("idpessoa"))));
+
         try {
-            GenericDAO dao = new EntregaDAO();
-            request.setAttribute("entrega", dao.carregar(idEntrega));
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+            GenericDAO dao = new VeiculoDAO();
+            if (request.getParameter("idveiculo").equals("")) {
+                if (dao.cadastrar(oVeiculo)) {
+                    mensagem = "Veiculo " + oVeiculo.getNomeVeiculo() + " cadastrado com Sucesso !";
+                }else
+                mensagem = "Problemas ao cadastrar o Veiculo, Tente novamente reveja os dados inseridos";
+            } else {
+                oVeiculo.setIdVeiculo(Integer.parseInt(request.getParameter("idveiculo")));
+                if (dao.alterar(oVeiculo)) {
+                    mensagem = "Veículo " + oVeiculo.getNomeVeiculo() + ", alterado com Sucesso !";
+                } else 
+                    mensagem = "Problemas ao alterar os dados do Veiculo, Tente novamente reveja os dados inseridos";
+            }
+            
+            request.setAttribute("mensagem", mensagem);
+            request.getRequestDispatcher("ListarVeiculo").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            System.out.println("Problemas no servlet ao Cadastrar Veiculo erro "+ex.getMessage());
             ex.printStackTrace();
         }
     }
