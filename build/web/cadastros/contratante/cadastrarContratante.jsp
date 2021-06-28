@@ -57,10 +57,5 @@
     <input type="submit" value="Cadastrar" name="cadastrar">
     <input type="reset" value="Limpar" name="Limpar ">
 </form>
-<br></br>
-<div align="center">
-    <a href="ListarContratante">Voltar</a>
-
-</div>
 </body>
 </html>

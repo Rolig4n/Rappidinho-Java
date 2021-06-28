@@ -72,7 +72,7 @@ public class ContratadoDAO implements GenericDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*, con.foto_contratado, con.cnh_contratado, c.nome_cidade, e.sigla_estado from pessoa p\n" +
+        String sql = "select p.*, con.id_contratado, con.foto_contratado, con.cnh_contratado, c.nome_cidade, e.sigla_estado from pessoa p\n" +
 "                inner join contratado con \n" +
 "                on p.id_pessoa = con.id_pessoa\n" +
 "                inner join cidade c \n" +
@@ -87,6 +87,7 @@ public class ContratadoDAO implements GenericDAO {
             while (rs.next()) {
                 Contratado oContratado = new Contratado();
                 oContratado.setIdPessoa(rs.getInt("id_pessoa"));
+                oContratado.setIdContratado(rs.getInt("id_contratado"));
                 oContratado.setNomePessoa(rs.getString("nome_pessoa"));
                 oContratado.setEmailPessoa(rs.getString("email_pessoa"));
                 oContratado.setCpfPessoa(rs.getString("cpf_pessoa"));

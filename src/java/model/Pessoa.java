@@ -25,6 +25,14 @@ public class Pessoa {
     public Pessoa() {
     }
 
+    public Pessoa(Integer idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+    
+      public Pessoa(String nomePessoa) {
+        this.nomePessoa = nomePessoa;
+    }
+
     /**
      * @return the idPessoa
      */

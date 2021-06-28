@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Pessoa;
 import utils.ConnectionFactory;
 
@@ -74,7 +76,7 @@ public class PessoaDAO {
 
     public Boolean alterar(Pessoa pessoa) {
         PreparedStatement stmt = null;
-        String sql = "update pessoa set nome_pessoa = ?, email_pessoa = ?,senha_pessoa, cpf_pessoa = ?,"
+        String sql = "update pessoa set nome_pessoa = ?, email_pessoa = ?, cpf_pessoa = ?,"
                 + " telefone_pessoa, endereco_pessoa, tipo_pessoa" 
                 + " where id_pessoa = ?;";
 
@@ -82,12 +84,11 @@ public class PessoaDAO {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, pessoa.getNomePessoa());
             stmt.setString(2, pessoa.getEmailPessoa());
-            stmt.setString(3, pessoa.getSenhaPessoa());
-            stmt.setString(4, pessoa.getCpfPessoa());      
-            stmt.setString(5, pessoa.getTelefonePessoa());
-            stmt.setString(6, pessoa.getEnderecoPessoa());
-            stmt.setString(7, pessoa.getTipoPessoa());
-            stmt.setInt(8, pessoa.getIdPessoa());
+            stmt.setString(3, pessoa.getCpfPessoa());      
+            stmt.setString(4, pessoa.getTelefonePessoa());
+            stmt.setString(5, pessoa.getEnderecoPessoa());
+            stmt.setString(6, pessoa.getTipoPessoa());
+            stmt.setInt(7, pessoa.getIdPessoa());
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -145,4 +146,37 @@ public class PessoaDAO {
         return pessoa;
 
     }
+    
+    public List<Object> listar(){
+    List<Object> lstresultado = new ArrayList<>();
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    String sql = "select * from pessoa order by id_pessoa";
+    
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs= stmt.executeQuery();
+            
+            while(rs.next()){
+                Pessoa oPessoa = new Pessoa();
+                oPessoa.setIdPessoa(rs.getInt("id_pessoa"));
+                oPessoa.setNomePessoa(rs.getString("nome_pessoa"));
+                oPessoa.setEmailPessoa(rs.getString("email_pessoa"));
+                oPessoa.setSenhaPessoa(rs.getString("senha_pessoa"));
+                oPessoa.setCpfPessoa(rs.getString("cpf_pessoa"));
+                oPessoa.setTelefonePessoa(rs.getString("telefone_pessoa"));
+                oPessoa.setEnderecoPessoa(rs.getString("endereco_pessoa"));
+                oPessoa.setTipoPessoa(rs.getString("tipo_pessoa"));
+                lstresultado.add(oPessoa);
+            }
+        } catch (Exception ex) {
+        }finally{
+            try {
+                
+            } catch (Exception ex) {
+            }
+        }
+        return lstresultado;
+    }
+    
 }

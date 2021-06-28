@@ -19,6 +19,10 @@ public class Contratante extends Pessoa {
     public Contratante() {
     }
 
+    public Contratante(int idContratante) {
+        this.idContratante = idContratante;
+    }
+
     /**
      * @return the idContratante
      */

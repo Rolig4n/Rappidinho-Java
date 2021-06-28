@@ -109,13 +109,14 @@ public class CadastrarContratado extends HttpServlet {
             } else {
                 if (dao.alterar(oContratado)) {
                     mensagem = "Contratado " + oContratado.getNomePessoa() + ", alterado com sucesso!";
+              
                 } else {
                     mensagem = "Problema ao alterar Contratado!" + " Verifique os dados e tente novamente !";
                 }
             }
 
             request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("ListarContratado").forward(request, response);
+            request.getRequestDispatcher("DadosContratado").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas no Servlet ao Salvar Contratado! Erro: " + ex.getMessage());
             ex.printStackTrace();
