@@ -5,6 +5,8 @@
  */
 package controller.entrega;
 
+import DAO.EntregaDAO;
+import DAO.GenericDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,17 +34,16 @@ public class ExcluirEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ExcluirEntrega</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ExcluirEntrega at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+       
+        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
+        
+        try {
+            GenericDAO dao = new EntregaDAO();
+            dao.excluir(idEntrega);
+            request.getRequestDispatcher("ListarEntrega").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Problemas na Servlet ao Excluir Entrega "+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

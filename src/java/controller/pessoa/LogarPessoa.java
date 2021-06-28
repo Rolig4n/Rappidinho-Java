@@ -46,12 +46,18 @@ public class LogarPessoa extends HttpServlet {
             if (!request.getParameter("emailpessoa").equals("") && !request.getParameter("senhapessoa").equals("")) {
 
                 Pessoa oPessoa = null;
-
+     
+                
                 try {
                     PessoaDAO dao = new PessoaDAO();
                     oPessoa = dao.logarPessoa(request.getParameter("emailpessoa"), request.getParameter("senhapessoa"));
+                    
+                    GenericDAO daocontratado = new ContratadoDAO();
+                    
+                    
 
                     if (oPessoa != null) {
+                        int idPessoa = oPessoa.getIdPessoa();
                         
                         HttpSession session = request.getSession(true);
                         session.setMaxInactiveInterval(300);                        
@@ -60,7 +66,7 @@ public class LogarPessoa extends HttpServlet {
                         
                         if (oPessoa.getTipoPessoa().equalsIgnoreCase("A")){
                             request.setAttribute("tipo", oPessoa.getTipoPessoa());
-                            request.getRequestDispatcher("cadastros/administrador/index.jsp").forward(request, response);
+                            request.getRequestDispatcher("dashboard.jsp").forward(request, response);
                         } else if (oPessoa.getTipoPessoa().equalsIgnoreCase("C")){
                             Contratante oContratante = null;
                             try{
@@ -72,18 +78,19 @@ public class LogarPessoa extends HttpServlet {
                                 ex.printStackTrace();
                             }
                             
-                            request.getRequestDispatcher("cadastros/contratante/index.jsp").forward(request, response);
+                            request.getRequestDispatcher("dashboard.jsp").forward(request, response);
                         } else if (oPessoa.getTipoPessoa().equalsIgnoreCase("M")){
                              Contratado oContratado = null;
                             try{
                                 GenericDAO daoContratado = new ContratadoDAO();
                                 oContratado = (Contratado) daoContratado.carregar(oPessoa.getIdPessoa());
-                                session.setAttribute("contratante", oContratado);
+                                session.setAttribute("contratado", oContratado);
+                           
                             } catch (Exception ex){
                                 System.out.println("Problemas ao carregar Contratado! Erro: " + ex.getMessage());
                                 ex.printStackTrace();
                             }
-                            request.getRequestDispatcher("cadastros/contratado/index.jsp").forward(request, response);
+                            request.getRequestDispatcher("dashboard.jsp").forward(request, response);
                         } else {
                             mensagemErro(request, response);
                         }

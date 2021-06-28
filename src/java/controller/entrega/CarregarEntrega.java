@@ -5,6 +5,8 @@
  */
 package controller.entrega;
 
+import DAO.GenericDAO;
+import DAO.EntregaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,17 +34,15 @@ public class CarregarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CarregarEntrega</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CarregarEntrega at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int idEntrega = Integer.parseInt(request.getParameter("identrega"));
+        
+        try {
+            GenericDAO dao = new EntregaDAO();
+            request.setAttribute("entrega", dao.carregar(idEntrega));
+            request.getRequestDispatcher("DadosEntrega").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Problemas na Servlet ao Carregar Entrega "+ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

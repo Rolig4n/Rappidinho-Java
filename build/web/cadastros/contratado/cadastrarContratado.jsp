@@ -28,7 +28,7 @@
     <hr>
 </tr>
 <form name="cadastrarContratado" action="${pageContext.request.contextPath}/CadastrarContratado" method="POST" enctype="multipart/form-data">
-    <p>ID:</p>
+    <p>ID Pessoa:</p>
     <label><input type="number" id="idpessoa" value="${contratado.idPessoa}" name="idpessoa" placeholder="ID" readonly="true"/></label>
     <br></br>
     <img src="${pageContext.request.contextPath}/plugins/images/avatar.png" alt="Avatar" width="100" height="100" ${contratado.fotoContratado != null ? 'hidden' : ''} /> <img src="${pageContext.request.contextPath}/MostrarFotoContratado?idpessoa=${contratado.idPessoa}" width="150" heigth="150" id="fotocontratado" alt="Foto Contratado" ${contratado.fotoContratado == null ? 'hidden' : ''} onerror="isImg(this);" /> <br />
@@ -54,15 +54,10 @@
             <option value="${cidade.idCidade}" ${pessoa.cidade.idCidade == cidade.idCidade ? 'selected' : ''} >${cidade.nomeCidade}</option>                               
         </c:forEach>
     </select>
-
+    ${mensagem}
     <br></br>
     <input type="submit" value="Cadastrar" name="cadastrar">
     <input type="reset" value="Limpar" name="Limpar ">
 </form>
-<br></br>
-<div align="center">
-    <a href="ListarContratado">Voltar</a>
-
-</div>
 </body>
 </html>

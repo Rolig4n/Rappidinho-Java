@@ -71,7 +71,7 @@ public class ContratanteDAO implements GenericDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select p.*, con.foto_contratante, c.nome_cidade, e.sigla_estado from pessoa p\n" +
+        String sql = "select p.*, con.id_contratante, con.foto_contratante, c.nome_cidade, e.sigla_estado from pessoa p\n" +
 "                inner join contratante con \n" +
 "                on p.id_pessoa = con.id_pessoa\n" +
 "                inner join cidade c \n" +

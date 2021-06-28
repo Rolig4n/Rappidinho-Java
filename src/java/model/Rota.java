@@ -18,8 +18,25 @@ public class Rota {
  private Double latChegadaRota;
  private Double lngChegadaRota;
  private String statusRota;
+ private Contratado contratado;
+ private Pessoa pessoa;
+ 
 
     public Rota() {
+    }
+
+    public Rota(int idRota) {
+        this.idRota = idRota;
+        }
+    
+    public Rota (int idRota, String nomeRota){
+        this.idRota = idRota;
+        this.nomeRota = nomeRota;
+    }
+
+    public Rota(double latSaidaRota, double lngSaidaRota) {
+      this.latSaidaRota = latSaidaRota;
+      this.lngSaidaRota = lngSaidaRota;
     }
 
     /**
@@ -118,6 +135,34 @@ public class Rota {
      */
     public void setStatusRota(String statusRota) {
         this.statusRota = statusRota;
+    }
+
+    /**
+     * @return the contratado
+     */
+    public Contratado getContratado() {
+        return contratado;
+    }
+
+    /**
+     * @param contratado the contratado to set
+     */
+    public void setContratado(Contratado contratado) {
+        this.contratado = contratado;
+    }
+
+    /**
+     * @return the pessoa
+     */
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    /**
+     * @param pessoa the pessoa to set
+     */
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
  
  

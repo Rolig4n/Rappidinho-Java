@@ -20,6 +20,10 @@ public class Contratado extends Pessoa{
     public Contratado() {
     }
 
+    public Contratado(int idContratado) {
+        this.idContratado = idContratado;
+    }
+
     /**
      * @return the idContratado
      */

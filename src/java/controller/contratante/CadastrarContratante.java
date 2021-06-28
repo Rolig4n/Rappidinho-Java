@@ -113,7 +113,7 @@ public class CadastrarContratante extends HttpServlet {
             }
 
             request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("ListarContratante").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas no Servlet ao Salvar Contratante! Erro: " + ex.getMessage());
             ex.printStackTrace();
