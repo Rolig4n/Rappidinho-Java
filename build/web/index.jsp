@@ -16,11 +16,14 @@
                 </div>
             </div>
 
-            <div class="error-box" id="login" align="center">
+            <div class="card white-box" id="login" align="center">
+                <div id="error" align="center">
+                ${mensagem}
                 <img src="${pageContext.request.contextPath}/plugins/images/Rappdinho A.png" width="380" alt="logo" />
-                <div class="row justify-content-center card-body">
-                    <h1 class="text-danger">Login</h1>
-                    <form class="col-8 form-horizontal form-material" name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">
+            </div>
+            <div class="row justify-content-center card-body">
+                <h1 class="text-danger">Login</h1>
+                <form class="col-8 form-horizontal form-material" name="logarpessoa" action="${pageContext.request.contextPath}/LogarPessoa" method="POST">
                     <div class="form-group mb-4">
                         <label class="col-md-12 p-0" for="emailpessoa">Email</label>
                         <div class="col-md-6 border-bottom p-0">
@@ -36,11 +39,11 @@
                     <input type="hidden" name="acao" value="logar">
                     <p><input type="submit" name="logar" id="logar" value="Acessar" class="btn btn-danger text-white"/></p>            
                 </form>
-                <div id="error" align="center">
-                    ${erro}    
-                </div>
                 <div id ="cadastrar" align="center">
-                    <p>Não tem conta ? <a href="Cadastrar" role="button">Cadastrar-se</a></p>
+                    <p>
+                        Não tem conta ? Cadastrar-se como <br><a href="${pageContext.request.contextPath}/DadosContratante" role="button">Contratante</a>
+                        ou <a href="${pageContext.request.contextPath}/DadosContratado" role="button">Entregador</a> agora!
+                    </p>
                 </div>
             </div>
         </div>

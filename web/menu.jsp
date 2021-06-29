@@ -36,7 +36,7 @@
                 </li>
                 <!-- Menu customizado / Depende Tipo Usuario-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="${pageContext.request.contextPath}/entrega.jsp"
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="ListarEntrega"
                        aria-expanded="false">
                         <i class="fas fa-boxes" aria-hidden="true"></i>
                         <span class="hide-menu">Minhas estregas</span>
@@ -85,7 +85,7 @@
             <ul id="sidebarnav">
                 <!-- User Profile-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="dashboard.jsp">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.jsp">
                         <i class="fas fa-chart-pie"></i>
                     </a>
                 </li>

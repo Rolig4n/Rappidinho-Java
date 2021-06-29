@@ -34,32 +34,37 @@
                         <div class="col-md-10 col-lg-10 col-sm-12">
                             <div class="white-box">
                                 <div class="d-md-flex mb-3">
-                                    <h3 class="box-title mb-0">Entregas feitas recentemente <a href="novaEntrega" class="btn btn-danger text-white">
-                                            <i class="fa fa-plus" aria-hidden="true"></i> Entrega
-                                        </a>
-                                    </h3>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table no-wrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-top-0">#</th>
-                                                <th class="border-top-0">Entregador</th>
-                                                <th class="border-top-0">Data</th>
-                                                <th class="border-top-0">Valor</th>
-                                                <th class="border-top-0">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <c:forEach var="nome-variavel" items="${null}">
-                                            <tr>
-                                                <td>${null} <!-- id entrega--></td>
-                                                <td>${null} <!-- entregador--></td>
-                                                <td>${null} <!-- data entrega--></td>
-                                                <td>${null} <!-- valor entrega--></td>
-                                                <td><span class="${(null==1)? "text-success" : "text-danger"}">${null} <!-- status entrega--></span></td>
-                                            </tr>
-                                        </c:forEach>
+                                    <p>${mensagem} ${resposta}</p>
+                                    <h3 class="box-title mb-0">Entregas feitas recentemente <a href="${pageContext.request.contextPath}/DadosEntrega" class="btn btn-danger text-white">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Entrega
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">ID</th>
+                                            <th class="border-top-0">Data</th>
+                                            <th class="border-top-0">Status Entrega</th>
+                                            <th class="border-top-0">ID Contratado</th>
+                                            <th class="border-top-0">ID Pedido</th>
+                                            <th class="border-top-0" colspan="2">Editar</th>
+                                            <th class="border-top-0" colspan="2">Alterar Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="entrega" items="${entregas}">
+                                        <td>${entrega.idEntrega}</td>
+                                        <td>${entrega.dataEntrega}</td>
+                                        <td>${entrega.statusEntrega}</td>
+                                        <td>${entrega.contratado.idContratado}</td>
+                                        <td>${entrega.pedido.idPedido}</td>
+                                        <td><a href="${pageContext.request.contextPath}/CarregarEntrega?identrega=${entrega.idEntrega}">Alterar</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/ExcluirEntrega?identrega=${entrega.idEntrega}">Excluir</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/AlterarStatusEntrega?identrega=${entrega.idEntrega}&statusentrega=t">Em Transporte</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/AlterarStatusEntrega?identrega=${entrega.idEntrega}&statusentrega=r">Realizada</a></td>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

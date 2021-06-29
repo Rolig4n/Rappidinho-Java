@@ -7,58 +7,76 @@
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 
-<html>
+<html> 
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-            <title>Lista de Entregaes</title>
+        <c:import url="/head.jsp"></c:import>
+            <title>Rappidinho - Entregas</title>
         </head>
+
         <body>
-        <tr>
-        <hr>
-        <th colspan="2" align="center">${mensagem}</th>
-        </tr>
-            <table align="center" border="1">
-                <thead>
-                <th colspan="11" align="center">Entregas</th>
-                <tr>
-                    <th class="border-top-0">ID</th>
-                    <th class="border-top-0">Data Pedido</th>
-                    <th class="border-top-0">Data Entrega</th>
-                    <th class="border-top-0">Pedido</th>
-                    <th class="border-top-0">Rota</th>
-                    <th class="border-top-0">Remetente</th>
-                    <th class="border-top-0">Latitude Saída</th>
-                    <th class="border-top-0">Longitude Saída</th>
-                    <th class="border-top-0">Latitude Destino</th>
-                    <th class="border-top-0">Longitude Destino</th>
-                    <th class="border-top-0">Status</th>
-                    <th class="border-top-0" colspan="2">Editar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="entrega" items="${entregaes}">
-                    <tr>    
-                        <td>${entrega.idEntrega}</td>
-                        <td>${entrega.pedido.dataPedido}</td>
-                        <td>${entrega.dataEntrega}</td>
-                        <td>${entrega.pedido.idPedido}</td>
-                        <td>${entrega.rota.nomeRota}</td> 
-                        <td>${entrega.contratante.nomeContratante}</td> 
-                        <td>${entrega.rota.latSaidaRota}</td> 
-                        <td>${entrega.rota.lngSaidaRota}</td> 
-                        <td>${entrega.rota.latDestinoPedido}</td> 
-                        <td>${entrega.rota.lngDestinoPedido}</td> 
-                        <td>${entrega.status}</td> 
-                        <td><a href="${pageContext.request.contextPath}/CarregarEntrega?idpessoa=${entrega.idEntrega}">Alterar</a></td>
-                        <td><a href="${pageContext.request.contextPath}/ExcluirEntrega?idpessoa=${entrega.idEntrega}">Excluir</a></td>
-                    </tr>
-                </c:forEach>
-    </tbody>
-    </table>
-            <br></br>
-               <div align="center">
-                <a href="/index.jsp">Home</a>
-                <a href="${pageContext.request.contextPath}/DadosEntrega">Cadastrar Nova Entrega</a>
+
+            <!--Corpo da pagina-->
+            <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+                 data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+                <!--CabeÃ§alho-->
+            <c:import url="/cabecalho.jsp"></c:import>
+
+                <!--Menu-->
+            <c:import url="/menu.jsp"></c:import>
+
+                <!--Conteudo-->
+                <div class="page-wrapper">
+                    <!--taca os bag aqui dentro-->
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-10 col-sm-12">
+                            <div class="white-box">
+                                <div class="d-md-flex mb-3">
+                                    <p>${mensagem} ${resposta}</p>
+                                    <h3 class="box-title mb-0">Entregas feitas recentemente <a href="${pageContext.request.contextPath}/DadosEntrega" class="btn btn-danger text-white">
+                                        <i class="fa fa-plus" aria-hidden="true"></i> Entrega
+                                    </a>
+                                </h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">ID</th>
+                                            <th class="border-top-0">Data</th>
+                                            <th class="border-top-0">Status Entrega</th>
+                                            <th class="border-top-0">ID Contratado</th>
+                                            <th class="border-top-0">ID Pedido</th>
+                                            <th class="border-top-0" colspan="2">Editar</th>
+                                            <th class="border-top-0" colspan="2">Alterar Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="entrega" items="${entregas}">
+                                        <td>${entrega.idEntrega}</td>
+                                        <td>${entrega.dataEntrega}</td>
+                                        <td>${entrega.statusEntrega}</td>
+                                        <td>${entrega.contratado.idContratado}</td>
+                                        <td>${entrega.pedido.idPedido}</td>
+                                        <td><a href="${pageContext.request.contextPath}/CarregarEntrega?identrega=${entrega.idEntrega}">Alterar</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/ExcluirEntrega?identrega=${entrega.idEntrega}">Excluir</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/AlterarStatusEntrega?identrega=${entrega.idEntrega}&statusentrega=t">Em Transporte</a></td>
+                                        <td><a href="${pageContext.request.contextPath}/AlterarStatusEntrega?identrega=${entrega.idEntrega}&statusentrega=r">Realizada</a></td>
+
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Rodape-->
+                <c:import url="/footer.jsp"></c:import>
+                </div>
             </div>
-    </body>
-    </html>
+            <!--Import dos scripts-->
+        <c:import url="/scripts.jsp"></c:import>
+</body>
+</html>

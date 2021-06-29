@@ -30,7 +30,7 @@
     </form>
          <br></br>
            <div align="center">
-            <a href="ListarEstado">Voltar</a>
+               <a href="${pageContext.request.contextPath}/ListarEstado">Voltar</a>
         </div>
 </body>
 </html>

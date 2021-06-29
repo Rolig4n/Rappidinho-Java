@@ -41,13 +41,33 @@
                         <!-- Fim Mapa -->
                     </div>
 
+                    <div class="row justify-content-center">
+                        <!-- Card Sistema -->
+                        <div class="row col-10">
+                            <div class="white-box col-md-4 col-xs-12">
+                                <h3>Redes sociais</h3>
+                                <p>Nos acompanhe nas nossas redes socias! Você as encontra ao lado no menu <b class="text-danger">Compartilhar</b> ou no rodapé.</p>
+                            </div>
+                            <div class="white-box col-md-4 col-xs-12">
+                                <h3>Priorizamos sua segurança</h3>
+                                <p>Sabemos da atual situação do país, por isso <b class="text-danger">fique em casa</b> se você puder e use <b class="text-danger">mascara</b>.</p>
+                            </div>
+                            <div class="white-box col-md-4 col-xs-12">
+                                <h3>Baixe nosso App</h3>
+                                <p>Melhor desempenho. Mais segurança e praticidade.<br> Baixe agora no seu dispositvo <a href="${pageContext.request.contextPath}/#">Android</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!--Widgets-->
                     <div class="row justify-content-center">
                         <!--Entregas Recentes-->
                         <div class="col-md-10 col-lg-10 col-sm-12">
                             <div class="white-box">
                                 <div class="d-md-flex mb-3">
-                                    <h3 class="box-title mb-0">Entregas feitas recentemente <a href="novaEntrega" class="btn btn-danger text-white">
+                                    <h3 class="box-title mb-0">
+                                        Entregas feitas recentemente
+                                        <a href="novaEntrega" class="btn btn-danger text-white">
                                             <i class="fa fa-plus" aria-hidden="true"></i> Entrega
                                         </a>
                                     </h3>
